@@ -86,9 +86,20 @@ class StreamPlatformVS(viewsets.ViewSet):
 """
 - Model ViewSet
 """
+
+"""
 class StreamPlatformVS(viewsets.ModelViewSet):
     queryset = StreamPlatform.objects.all()
     serializer_class = StreamPlatformSerializer
+"""
+
+"""
+- ReadOnly Model ViewSet
+"""
+class StreamPlatformVS(viewsets.ReadOnlyModelViewSet):
+    queryset = StreamPlatform.objects.all()
+    serializer_class = StreamPlatformSerializer
+
 
 class StreamPlatformAV(APIView):
     def get(self, request):

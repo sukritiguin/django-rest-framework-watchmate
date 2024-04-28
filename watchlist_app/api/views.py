@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 
-from rest_framework import status, mixins, generics
+from rest_framework import status, mixins, generics, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
@@ -57,6 +57,28 @@ class ReviewCreate(generics.CreateAPIView):
 
 #     def get(self, request, *args, **kwargs):
 #         return self.retrieve(request, *args, **kwargs)
+
+"""
+- Stream Platform using ViewSet
+"""
+
+class StreamPlatformVS(viewsets.ViewSet):
+    def list(self, request):
+        queryset = StreamPlatform.objects.all()
+        serializer = StreamPlatformSerializer(queryset, many=True, context={'request': request})
+        return Response(serializer.data)
+    def retrieve(self, request, pk=None):
+        queryset = StreamPlatform.objects.all()
+        watchlist = get_object_or_404(queryset, pk=pk)
+        serializer = StreamPlatformSerializer(watchlist, context={'request': request})
+        return Response(serializer.data)
+    def create(self, request):
+        serializer = StreamPlatformSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+        else:
+            return Response(serializer.errors)
+        return Response(serializer.data)
 
 class StreamPlatformAV(APIView):
     def get(self, request):

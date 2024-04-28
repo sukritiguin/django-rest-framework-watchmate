@@ -16,14 +16,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
+from rest_framework.routers import DefaultRouter
+
 from . import views
+
+router = DefaultRouter()
+router.register('stream', views.StreamPlatformVS, basename='streamplatform')
 
 urlpatterns = [
     path("list/", views.WatchListAV.as_view(), name='list'),
     path("list/<int:pk>/", views.WatchDetailsAV.as_view(), name='"watchlist-detail'),
 
-    path("stream/", views.StreamPlatformAV.as_view(), name='stream'),
-    path("stream/<int:pk>/", views.StreamPlatformDetailsAV.as_view(), name='streamplatform-detail'),
+    path('', include(router.urls)),
+    # path("stream/", views.StreamPlatformAV.as_view(), name='stream'),
+    # path("stream/<int:pk>/", views.StreamPlatformDetailsAV.as_view(), name='streamplatform-detail'),
 
     # path('review/', views.ReviewList.as_view(), name='review-list'),
     # path('review/<int:pk>/', views.ReviewDetail.as_view(), name='review-detail'),

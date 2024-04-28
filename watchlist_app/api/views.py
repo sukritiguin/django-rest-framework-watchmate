@@ -62,6 +62,7 @@ class ReviewCreate(generics.CreateAPIView):
 - Stream Platform using ViewSet
 """
 
+"""
 class StreamPlatformVS(viewsets.ViewSet):
     def list(self, request):
         queryset = StreamPlatform.objects.all()
@@ -79,6 +80,15 @@ class StreamPlatformVS(viewsets.ViewSet):
         else:
             return Response(serializer.errors)
         return Response(serializer.data)
+
+"""
+
+"""
+- Model ViewSet
+"""
+class StreamPlatformVS(viewsets.ModelViewSet):
+    queryset = StreamPlatform.objects.all()
+    serializer_class = StreamPlatformSerializer
 
 class StreamPlatformAV(APIView):
     def get(self, request):
